@@ -1,46 +1,27 @@
 Team Name: Butter Ball Bandits (CMPE 131 SEC01)
-
-Members: 
-Vishnu Anilkumar Calvin Tai Rishi Pothukuchi Sahithya Swaminathan Ahmed Sabzwari
-
-Team Leader: 
-Vishnu Anilkumar
-
-Link to your code repository: 
-https://github.com/AhmedSabz/CMPE-131-Design-Project.git
-
+Members: Vishnu Anilkumar Calvin Tai Rishi Pothukuchi Sahithya Swaminathan Ahmed Sabzwari
+Team Leader:Sahithya Swaminathan
+Link to the code repository: git hub repository
 Abstract:
 What are you asking: 
-We are creating an all in one fitness interface that will guide and support user’s fitness and health journeys by placing a focus on weight management.
- The features included in the app will include a unique calorie tracking system and personalized workout routines based on the user's weight goals.
- 
+We are creating an application that helps students at SJSU find clubs that match their interests. The application will prompt the user to create his or her profile. Once the profile has been created, the user enters his or her skills, interests, and academic background. An algorithm will be used to locate different clubs that match the interests of the user.
+
+
 Why is it important: 
-This interface will allow users to keep track of both nutrition and exercise all under one website/app which makes access 
-to information much easier for the user. The features of the interface help motivate users to reach their nutritional and fitness goals.   
+College serves as a crucial pathway to employment. Oftentimes, college students do not know what profession they want to take up. However, there are many clubs on campuses that prepare the students for their professional careers. Moreover, these clubs help establish connections that can last a lifetime. We are making this application to ease the process of finding interests that suits college students. The interests and skills of the user present in this application will help narrow down the interests of the student. The extensive database that consists of a variety of clubs will help the student pick a club that he or she is most inclined to.
+
 
 How will you develop it: 
-This website will involve various features useful for a user’s health and fitness journey bringing a focus on weight management. 
-The product development side will have an equal emphasis on the front and back end as we will prioritize an easy and efficient 
-and user friendly experience along with advanced features. In the higher-level we will need to use HTML, CSS and javascript to create the GUI.
-Given our group’s engineering background, we will need to draw on our  C++ experience to pick up Python. 
-With that being said, since this project needs to be completed by the end of the semester we will focus on implementing the core features along
- with a straightforward UI with open source softwares such as react.js, angular, Vue.js, Node.js, and Flask. 
-
+This website will involve various features useful for a user’s health and fitness journey bringing a focus on weight management. The product development side will have an equal emphasis on the front and back end as we will prioritize an easy and efficient and user friendly experience along with advanced features. In the higher-level we will need to use HTML, CSS and javascript to create the GUI. Given our group’s engineering background, we will need to draw on our  C++ experience to pick up Python. With that being said, since this project needs to be completed by the end of the semester we will focus on implementing the core features along with a straightforward UI with open source softwares such as react.js, angular, Vue.js, Node.js, and Flask. 
 Why are the results useful: 
-The results will allow the user to stick to a specific meal plan allowing the user to be physically fit. The successful results will prompt the user
- to share this application with his or her friends which would help us monetize this application.
+By utilizng this application, the user will be able to narrow down from a list of 500 clubs that interest them. This application will also help the user make connections in the clubs that he or she wants to join. With this product, every student can be confident in what he or she wants to take up as a profession, making them a step closer to employment.
+
 
 List of Requirements:
-
-Profile management 
-The user profile will include age, weight, height, and BMI. Additionally, the user will be allowed to input their personal goals. 
-
-Calorie tracking 
-The calorie tracker will set a daily calorie aim based on the user's weight goals. By scanning nutrition labels, users can have a swift way of inputting their calories and determining whether they are able to meet their goals.
-Weight tracking : As the user begins their health journey, they can track their progress through engaging visuals like graphs and charts that show weight changes over time. 
-Workout routine: An extremely important component in weight management is also exercise, so the interface will also customize workout routines from an extensive fitness repository. 
-Notifications: To keep users on track with their fitness and health goals, they can opt for reminders to get in their calories or exercise. 
-
+User Registration: The user should be able to register to the application using their sjsu email and list down interests, skills, and academic background
+Questionnaire: The questionnaire consists of questions that gauges the users interests based off their listed interests, skills, and academic background. The questions will ask the user about club size, amount of work per week in the club, etc.
+List of clubs: A page that lists all the clubs. The user can also manually check and register in a club. Each club can have a description button. This button can be implemented with REACT or HTML/CSS.
+Security: An algorithm can be implemented to check whether or not a user is actually affiliated with SJSU. If the user enters an email that is unaffiliated with SJSU, the program will prompt the user to re-enter a valid email
 Programming Requirements 
 HTML/CSS 
 JavaScript (front- end development)
