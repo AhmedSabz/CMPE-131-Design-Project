@@ -1,0 +1,16 @@
+/* src/App.css */
+.App {
+  padding-top: 30px;
+  text-align: center;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
