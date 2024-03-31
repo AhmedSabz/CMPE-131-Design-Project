@@ -27,6 +27,7 @@ function Navigation({ isLoggedIn, onLogout }) {
 
     const handleLogout = () => {
         onLogout(); // Call the onLogout function provided by the parent component
+        navigate('/');
     };
 
     return (
@@ -35,8 +36,8 @@ function Navigation({ isLoggedIn, onLogout }) {
             <ul>
                 <li><button onClick={handleHomeButtonClick}>Home</button></li>
                 {isLoggedIn && <li><button onClick={handleDashboardButtonClick}>Account Dashboard</button></li>}
-                <li><button onClick={handleClubRegistrationButtonClick}>Club Management</button></li>
-                <li><button onClick={handleUserRegistrationButtonClick}>User Management</button></li>
+                {!isLoggedIn && <li><button onClick={handleClubRegistrationButtonClick}>Club Login</button></li>}
+                {!isLoggedIn && <li><button onClick={handleUserRegistrationButtonClick}>User Login</button></li>}
                 <li><button onClick={handleSurveyButtonClick}>Club Matching Survey</button></li>
                 {isLoggedIn && <li><button onClick={handleLogout}>Log Out</button></li>}
             </ul>

@@ -13,31 +13,47 @@ import Database from './components/Database';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(null); // Store user data when logged in
-  const [clubs, setClubs] = useState([]);
+  const [clubs, setClubs] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [showSurvey, setShowSurvey] = useState(false);
 
-  const handleLogin = (userData) => {
+  const handleUserLogin = (userData) => {
     setIsLoggedIn(true);
     setUserData(userData); // Set user data after successful login
+  };
+
+  const handleClubLogin = (clubData) => {
+    setIsLoggedIn(true);
+    setClubs(clubData); // Set user data after successful login
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUserData(null); // Clear user data on logout
+    setClubs(null);
   };
 
   const handleUserRegistration = (newUserData) => {
     // Add the new user data to the database component
-    setUserData(prevData => {
-      if (prevData === null) {
+    setUserData(userData => {
+      if (userData === null) {
         return [newUserData]; // If prevData is null, return a new array with newUserData
       } else {
-        return [...prevData, newUserData]; // Otherwise, spread prevData and add newUserData
+        return [...userData, newUserData]; // Otherwise, spread prevData and add newUserData
       }
     });
   };
   
+  const handleClubRegistration = (newClubData) => {
+    // Add the new user data to the database component
+    setClubs(clubs => {
+      if (clubs === null) {
+        return [newClubData]; // If prevData is null, return a new array with newUserData
+      } else {
+        return [...clubs, newClubData]; // Otherwise, spread prevData and add newUserData
+      }
+    });
+  };
 
   const handleSurveySubmit = (answers) => {
     if (answers.interest1 !== '' && answers.interest2 !== '' && answers.interest3 !== '') {
@@ -60,16 +76,16 @@ function App() {
         <Navigation isLoggedIn={isLoggedIn} onLogout={handleLogout} />
         <Routes>
           <Route path="/" element={<Home />} />
+          
           {isLoggedIn && <Route path="/account_dashboard" element={<Dashboard />} />}
-          {/* Render "Account Dashboard" route only if user is logged in */}
-          <Route path="/club_registration" element={<ClubManagement />} />
-          <Route path="/user_registration" element={<UserManagement onLogin={handleLogin} onUserRegistration={handleUserRegistration} />} />
-          {/* Pass the handleUserRegistration function to the UserManagement component */}
+          
+          {!isLoggedIn && <Route path="/club_registration" element={<ClubManagement onLogin={handleClubLogin} onClubRegistration={handleClubRegistration}/>} />}
+
+          {!isLoggedIn && <Route path="/user_registration" element={<UserManagement onLogin={handleUserLogin} onUserRegistration={handleUserRegistration} />} />}
+          
           <Route path="/club_matching_survey" element={<Survey onSurveySubmit={handleSurveySubmit} />} />
-          {isLoggedIn && (
-            <Route path="/account_management" element={<Database userData={userData} />} />
-          )}
-          {/* Render "Account Management" route only if user is logged in */}
+          
+          {isLoggedIn && <Route path="/account_management" element={<Database userData={userData} />} />}
         </Routes>
       </div>
     </Router>

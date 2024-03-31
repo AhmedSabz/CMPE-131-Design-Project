@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
-const ClubManagement = () => {
+const ClubManagement = ({ onLogin, onClubRegistration }) => {
   const [isNewClub, setIsNewClub] = useState(true);
+  const [clubName, setClubName] = useState('');
+  const [password, setPassword] = useState('');
+
+  const navigate = useNavigate();
 
   const handleExistingClub = () => {
     setIsNewClub(false);
@@ -11,16 +16,39 @@ const ClubManagement = () => {
     setIsNewClub(true);
   };
 
+  const handleClubRegistration = (newClubData) => {
+    // Add the new club data to the database component
+    onClubRegistration(newClubData);
+    // setClubs(clubs => clubs ? [...clubs, newClubData] : [newClubData]);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isNewClub) {
+      // Call the onUserRegistration function to add new user to the database
+      handleClubRegistration({ clubName, password });
+    } else {
+      // Log in logic
+      onLogin({ clubName, password });
+      navigate('/account_dashboard');
+    }
+  };
+
   return (
     <div>
-      <h2>Club Management</h2>
+      {/* <h2>Club Management</h2> */}
       {isNewClub ? (
         <div>
-          <h3>Create New Club</h3>
-          <form>
+          <h2>Create New Club</h2>
+          <form onSubmit={handleSubmit}>
             <label>
               Club Name:
-              <input type="text" placeholder="Enter club name" />
+              <input type="text" value={clubName} onChange={(e) => setClubName(e.target.value)} placeholder="Enter club name" />
+            </label>
+            <br />
+            <label>
+              Password:
+              <input type="text" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password" />
             </label>
             <br />
             <label>
@@ -34,16 +62,16 @@ const ClubManagement = () => {
         </div>
       ) : (
         <div>
-          <h3>Log In to Club</h3>
-          <form>
+          <h2>Log In to Club</h2>
+          <form onSubmit={handleSubmit}>
             <label>
               Club Name:
-              <input type="text" placeholder="Enter club name" />
+              <input type="text" value={clubName} onChange={(e) => setClubName(e.target.value)} placeholder="Enter club name" />
             </label>
             <br />
             <label>
               Password:
-              <input type="password" placeholder="Enter club password" />
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}  placeholder="Enter club password" />
             </label>
             <br />
             <button type="submit">Log In</button>
