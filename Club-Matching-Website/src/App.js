@@ -5,30 +5,39 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Survey from './components/Survey';
 import Navigation from './components/Navigation';
 import Dashboard from './components/Dashboard';
-import UserManagement from './components/AccountManagement';
+import UserLogin from './components/UserLogin';
+import UserManagement from './components/UserManagement';
+import ClubLogin from './components/ClubLogin';
+import ClubDetails from './components/ClubDetails';
 import ClubManagement from './components/ClubManagement';
 import Home from './components/Home';
 import Database from './components/Database';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [isClubLoggedIn, setIsClubLoggedIn] = useState(false);
+  const [isAccountLoggedIn, setIsAccountLoggedIn] = useState(false);
   const [userData, setUserData] = useState(null); // Store user data when logged in
   const [clubs, setClubs] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [showSurvey, setShowSurvey] = useState(false);
 
   const handleUserLogin = (userData) => {
-    setIsLoggedIn(true);
+    setIsUserLoggedIn(true);
+    setIsAccountLoggedIn(true);
     setUserData(userData); // Set user data after successful login
   };
 
   const handleClubLogin = (clubData) => {
-    setIsLoggedIn(true);
+    setIsClubLoggedIn(true);
+    setIsAccountLoggedIn(true);
     setClubs(clubData); // Set user data after successful login
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
+    setIsUserLoggedIn(false);
+    setIsClubLoggedIn(false);
+    setIsAccountLoggedIn(false);
     setUserData(null); // Clear user data on logout
     setClubs(null);
   };
@@ -73,19 +82,23 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Navigation isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+        <Navigation isUserLoggedIn={isUserLoggedIn} isClubLoggedIn={isClubLoggedIn} isAccountLoggedIn={isAccountLoggedIn} onLogout={handleLogout} />
         <Routes>
           <Route path="/" element={<Home />} />
           
-          {isLoggedIn && <Route path="/account_dashboard" element={<Dashboard />} />}
+          {(isUserLoggedIn || isClubLoggedIn) && <Route path="/account_dashboard" element={<Dashboard />} />}
           
-          {!isLoggedIn && <Route path="/club_registration" element={<ClubManagement onLogin={handleClubLogin} onClubRegistration={handleClubRegistration}/>} />}
+          {!isAccountLoggedIn && <Route path="/club_login" element={<ClubLogin onLogin={handleClubLogin} onClubRegistration={handleClubRegistration}/>} />}
 
-          {!isLoggedIn && <Route path="/user_registration" element={<UserManagement onLogin={handleUserLogin} onUserRegistration={handleUserRegistration} />} />}
-          
+          {!isAccountLoggedIn && <Route path="/user_login" element={<UserLogin onLogin={handleUserLogin} onUserRegistration={handleUserRegistration} />} />}
+
+          {(!isUserLoggedIn && isClubLoggedIn) && <Route path="/club_management" element={<ClubManagement />} />}
+          {(!isUserLoggedIn && isClubLoggedIn) && <Route path="/club_details" element={<ClubDetails />} />}
+          {(isUserLoggedIn && !isClubLoggedIn) && <Route path="/user_management" element={<UserManagement />} />}
+
           <Route path="/club_matching_survey" element={<Survey onSurveySubmit={handleSurveySubmit} />} />
           
-          {isLoggedIn && <Route path="/account_management" element={<Database userData={userData} />} />}
+          {(isUserLoggedIn || isClubLoggedIn) && <Route path="/account_management" element={<Database userData={userData} />} />}
         </Routes>
       </div>
     </Router>
