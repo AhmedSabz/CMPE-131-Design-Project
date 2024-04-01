@@ -3,7 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const ClubDetails = () => {
   return (
-    <div>ClubDetails</div>
+    <div>
+      <h2>
+      ClubDetails
+      </h2>  
+    </div>
   )
 }
 

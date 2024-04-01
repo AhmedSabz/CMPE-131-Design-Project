@@ -1,9 +1,13 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+
 
 const ClubManagement = () => {
   return (
-    <div>ClubManagement</div>
+    <div>
+      <h2>
+      ClubManagement
+      </h2>
+    </div>
   )
 }
 

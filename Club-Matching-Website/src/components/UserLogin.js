@@ -1,6 +1,8 @@
 // UserLogin.js
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import "./UserLogin.css";
+
 
 const UserLogin = ({ onLogin, onUserRegistration }) => {
   const [isNewUser, setIsNewUser] = useState(true);
@@ -38,46 +40,47 @@ const UserLogin = ({ onLogin, onUserRegistration }) => {
   };
 
   return (
-    <div>
-      {/* <h2>User Management</h2> */}
+    <div className="container">
+      <div className="form-container">
       {isNewUser ? (
-        <div>
+        <div className='form-container-form'>
           <h2>Create New Account</h2>
           <form onSubmit={handleSubmit}>
-            <label>
+            <label className='form-container-label'>
               Username:
-              <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Enter username" />
+              <input type="text" className='form-container-input' value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Enter username" />
             </label>
             <br />
-            <label>
+            <label className='form-container-label'>
               Password:
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password" />
+              <input type="password" className='form-container-input' value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password" />
             </label>
             <br />
-            <button type="submit">Create Account</button>
+            <button type="submit" className='form-container-button'>Create Account</button>
           </form>
-          <p>Already have an account? <button onClick={handleExistingUser}>Log In</button></p>
+          <p>Already have an account? <button className='form-container-button' onClick={handleExistingUser}>Log In</button></p>
         </div>
       ) : (
-        <div>
+        <div className='form-container-form'>
           <h2>Log In</h2>
           <form onSubmit={handleSubmit}>
-            <label>
+            <label className='form-container-label'>
               Username:
-              <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Enter username" />
+              <input type="text" className='form-container-input' value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Enter username" />
             </label>
             <br />
-            <label>
+            <label className='form-container-label'>
               Password:
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password" />
+              <input type="password" className='form-container-input' value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password" />
             </label>
             <br />
-            <button type="submit">Log In</button>
+            <button type="submit" className='form-container-button'>Log In</button>
           </form>
-          <p>New user? <button onClick={handleNewUser}>Create Account</button></p>
+          <p>New user? <button className='form-container-button' onClick={handleNewUser}>Create Account</button></p>
         </div>
       )}
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      </div>
     </div>
   );
 };

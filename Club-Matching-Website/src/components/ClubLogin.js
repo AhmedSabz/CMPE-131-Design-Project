@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import "./ClubLogin.css";
 
 const ClubLogin = ({ onLogin, onClubRegistration }) => {
   const [isNewClub, setIsNewClub] = useState(true);
@@ -25,7 +26,7 @@ const ClubLogin = ({ onLogin, onClubRegistration }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isNewClub) {
-      // Call the onUserRegistration function to add new user to the database
+      // Call the onClubRegistration function to add new club to the database
       handleClubRegistration({ clubName, password });
     } else {
       // Log in logic
@@ -35,50 +36,51 @@ const ClubLogin = ({ onLogin, onClubRegistration }) => {
   };
 
   return (
-    <div>
-      {/* <h2>Club Management</h2> */}
+    <div className="container">
+      <div className="form-container">
       {isNewClub ? (
-        <div>
+        <div className='form-container-form'>
           <h2>Create New Club</h2>
           <form onSubmit={handleSubmit}>
-            <label>
+            <label className='form-container-label'>
               Club Name:
-              <input type="text" value={clubName} onChange={(e) => setClubName(e.target.value)} placeholder="Enter club name" />
+              <input type="text" className='form-container-input' value={clubName} onChange={(e) => setClubName(e.target.value)} placeholder="Enter club name" />
             </label>
             <br />
-            <label>
+            <label className='form-container-label'>
               Password:
-              <input type="text" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password" />
+              <input type="text" className='form-container-input' value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password" />
             </label>
             <br />
-            <label>
+            <label className='form-container-label'>
               Description:
-              <textarea placeholder="Enter club description"></textarea>
+              <textarea className='form-container-textarea' placeholder="Enter club description"></textarea>
             </label>
             <br />
-            <button type="submit">Create Club</button>
+            <button type="submit" className='form-container-button'>Create Club</button>
           </form>
-          <p>Already have a club? <button onClick={handleExistingClub}>Log In</button></p>
+          <p>Already have a club? <button className='form-container-button' onClick={handleExistingClub}>Log In</button></p>
         </div>
       ) : (
-        <div>
+        <div className='form-container-form'>
           <h2>Log In to Club</h2>
           <form onSubmit={handleSubmit}>
-            <label>
+            <label className='form-container-label'>
               Club Name:
-              <input type="text" value={clubName} onChange={(e) => setClubName(e.target.value)} placeholder="Enter club name" />
+              <input type="text" className='form-container-input' value={clubName} onChange={(e) => setClubName(e.target.value)} placeholder="Enter club name" />
             </label>
             <br />
-            <label>
+            <label className='form-container-label'>
               Password:
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}  placeholder="Enter club password" />
+              <input type="password" className='form-container-input' value={password} onChange={(e) => setPassword(e.target.value)}  placeholder="Enter club password" />
             </label>
             <br />
-            <button type="submit">Log In</button>
+            <button type="submit" className='form-container-button'>Log In</button>
           </form>
-          <p>New club? <button onClick={handleNewClub}>Create Club</button></p>
+          <p>New club? <button className='form-container-button' onClick={handleNewClub}>Create Club</button></p>
         </div>
       )}
+      </div>
     </div>
   );
 };

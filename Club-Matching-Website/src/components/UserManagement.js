@@ -3,7 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const UserManagement = () => {
   return (
-    <div>UserManagement</div>
+    <div>
+      <h2>
+      UserManagement
+      </h2>  
+    </div>
   )
 }
 
