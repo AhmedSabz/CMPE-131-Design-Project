@@ -13,11 +13,21 @@
   
   .navbar-title {
     margin-right: auto;
-    color: white;
-    font-weight: 500;
-    text-decoration: none;
+    /* color: white; */
+    /* font-weight: 500; */
+    /* text-decoration: none; */
+
+    background-image: url('../../public/SJSU Primary mark_Reversed.png');
+    /* Adjust background image properties */
+    background-size: contain; /* Cover the entire container */
+    background-position: center; /* Center the background image */
+    /* Add other styles as needed */
+    background-repeat: no-repeat;
+    color: transparent;
   }
   
+
+
   .navbar ul {
     list-style: none;
     padding: 0;
