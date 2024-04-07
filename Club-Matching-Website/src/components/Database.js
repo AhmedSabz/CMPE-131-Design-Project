@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Database = () => {
+const Database = ({userDataArray, clubDataArray}) => {
   // Retrieve user data from localStorage or initialize with an empty array
   const [users, setUsers] = useState(() => {
     const storedUsers = localStorage.getItem('users');

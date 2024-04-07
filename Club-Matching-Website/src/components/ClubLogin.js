@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import "./ClubLogin.css";
 
-const ClubLogin = ({ onLogin, onClubRegistration }) => {
+const ClubLogin = ({ onLogin, onClubRegistration, isClubLoggedIn }) => {
   const [isNewClub, setIsNewClub] = useState(true);
   const [clubName, setClubName] = useState('');
   const [password, setPassword] = useState('');
@@ -31,7 +31,9 @@ const ClubLogin = ({ onLogin, onClubRegistration }) => {
     } else {
       // Log in logic
       onLogin({ clubName, password });
-      navigate('/account_dashboard');
+      if(isClubLoggedIn === true){
+        navigate('/account_dashboard');
+      }
     }
   };
 
@@ -49,7 +51,7 @@ const ClubLogin = ({ onLogin, onClubRegistration }) => {
             <br />
             <label className='form-container-label'>
               Password:
-              <input type="text" className='form-container-input' value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password" />
+              <input type="password" className='form-container-input' value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password" />
             </label>
             <br />
             <label className='form-container-label'>

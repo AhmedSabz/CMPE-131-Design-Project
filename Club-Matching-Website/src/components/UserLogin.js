@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import "./UserLogin.css";
 
 
-const UserLogin = ({ onLogin, onUserRegistration }) => {
+const UserLogin = ({ onLogin, onUserRegistration, isUserLoggedIn}) => {
   const [isNewUser, setIsNewUser] = useState(true);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -35,7 +35,9 @@ const UserLogin = ({ onLogin, onUserRegistration }) => {
     } else {
       // Log in logic
       onLogin({ username, password });
-      navigate('/account_dashboard');
+      if(isUserLoggedIn === true){
+        navigate('/account_dashboard');
+      }
     }
   };
 

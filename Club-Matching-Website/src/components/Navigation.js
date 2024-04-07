@@ -37,6 +37,10 @@ function Navigation({ isUserLoggedIn, isClubLoggedIn, isAccountLoggedIn ,onLogou
         navigate('/user_management');
     };
 
+    const handleDatabase = () =>{
+        navigate('/database');
+    }
+
     const handleLogout = () => {
         onLogout(); // Call the onLogout function provided by the parent component
         navigate('/');
@@ -54,6 +58,7 @@ function Navigation({ isUserLoggedIn, isClubLoggedIn, isAccountLoggedIn ,onLogou
                 {(!isUserLoggedIn && isClubLoggedIn) && <li><button onClick={handleClubDetailsButtonClick}>Club Details</button></li>}
                 {(isUserLoggedIn && !isClubLoggedIn) && <li><button onClick={handleUserManagementButtonClick}>User Management</button></li>}
                 <li><button onClick={handleSurveyButtonClick}>Club Matching Survey</button></li>
+                {(isUserLoggedIn || isClubLoggedIn) && <li><button onClick={handleDatabase}>Database</button></li>}
                 {(isUserLoggedIn || isClubLoggedIn) && <li><button onClick={handleLogout}>Log Out</button></li>}
             </ul>
         </nav>

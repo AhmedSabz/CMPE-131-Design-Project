@@ -1,5 +1,5 @@
 // App.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Survey from './components/Survey';
@@ -17,49 +17,67 @@ function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [isClubLoggedIn, setIsClubLoggedIn] = useState(false);
   const [isAccountLoggedIn, setIsAccountLoggedIn] = useState(false);
-  const [userData, setUserData] = useState(null); // Store user data when logged in
-  const [clubs, setClubs] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [userDataArray, setUserDataArray] = useState([{userName: '', password: ''}]); // Store user data when logged in
+  const [clubDataArray, setClubDataArray] = useState([{clubName: '', password: ''}]);
+  const [currentUser, setCurrentUser] = useState({});
+  const [currentClub, setCurrentClub] = useState({});
   const [showSurvey, setShowSurvey] = useState(false);
 
-  const handleUserLogin = (userData) => {
-    setIsUserLoggedIn(true);
-    setIsAccountLoggedIn(true);
-    setUserData(userData); // Set user data after successful login
+
+
+  const handleUserLogin = ({ passedUsername, passedUserPassword }) => {
+    const searchedUserName = userDataArray.find(user => user.userName === passedUsername);
+    const searchedUserPassword = userDataArray.find(user => user.password === passedUserPassword);
+    if(searchedUserName && searchedUserPassword){
+      setIsUserLoggedIn(true);
+      setIsAccountLoggedIn(true);
+      setCurrentUser({ passedUsername, passedUserPassword });
+    }
+    else{
+      alert("Incorrect Username or Password");
+    }
   };
 
-  const handleClubLogin = (clubData) => {
-    setIsClubLoggedIn(true);
-    setIsAccountLoggedIn(true);
-    setClubs(clubData); // Set user data after successful login
+  const handleClubLogin = ({ passedClubName, passedClubPassword }) => {
+    const searchedClubName = clubDataArray.find(club => club.clubName === passedClubName);
+    const searchedClubPassword = clubDataArray.find(club => club.passoword === passedClubPassword);
+    if(searchedClubName && searchedClubPassword){
+      setIsClubLoggedIn(true);
+      setIsAccountLoggedIn(true);
+      setCurrentClub({ passedClubName, passedClubPassword });
+
+    }
+    else{
+      alert("Incorrect Username or Password");
+    }
   };
 
   const handleLogout = () => {
     setIsUserLoggedIn(false);
     setIsClubLoggedIn(false);
     setIsAccountLoggedIn(false);
-    setUserData(null); // Clear user data on logout
-    setClubs(null);
+    setCurrentUser({}); // Clear user data on logout
+    setCurrentClub({});
   };
 
-  const handleUserRegistration = (newUserData) => {
+  const handleUserRegistration = ({ passedUsername, passedUserPassword }) => {
     // Add the new user data to the database component
-    setUserData(userData => {
-      if (userData === null) {
-        return [newUserData]; // If prevData is null, return a new array with newUserData
+    setUserDataArray(userDataArray => {
+      if (userDataArray.length === 0) {
+        return [{ passedUsername, passedUserPassword }]; // If prevData is null, return a new array with newUserData
       } else {
-        return [...userData, newUserData]; // Otherwise, spread prevData and add newUserData
+        return [...userDataArray, { passedUsername, passedUserPassword }]; // Otherwise, spread prevData and add newUserData
       }
     });
   };
   
-  const handleClubRegistration = (newClubData) => {
+  const handleClubRegistration = ({ passedClubName, passedClubPassword }) => {
     // Add the new user data to the database component
-    setClubs(clubs => {
-      if (clubs === null) {
-        return [newClubData]; // If prevData is null, return a new array with newUserData
+    setClubDataArray(clubDataArray => {
+      if (clubDataArray.length === 0) {
+        return [{ passedClubName, passedClubPassword }]; // If prevData is null, return a new array with newUserData
       } else {
-        return [...clubs, newClubData]; // Otherwise, spread prevData and add newUserData
+        return [...clubDataArray, { passedClubName, passedClubPassword }]; // Otherwise, spread prevData and add newUserData
       }
     });
   };
@@ -71,7 +89,7 @@ function App() {
         { id: 2, name: 'Art Club', category: 'Creative', description: 'A club for art lovers.' },
         // Add more recommended clubs based on the survey answers
       ];
-      setClubs(recommendedClubs);
+      setClubDataArray(recommendedClubs);
       setShowSurvey(false); // Hide the survey after submission
     } else {
       alert("Please Provide Three Interests");
@@ -88,9 +106,9 @@ function App() {
           
           {(isUserLoggedIn || isClubLoggedIn) && <Route path="/account_dashboard" element={<Dashboard />} />}
           
-          {!isAccountLoggedIn && <Route path="/club_login" element={<ClubLogin onLogin={handleClubLogin} onClubRegistration={handleClubRegistration}/>} />}
+          {!isAccountLoggedIn && <Route path="/club_login" element={<ClubLogin onLogin={handleClubLogin} onClubRegistration={handleClubRegistration} isClubLoggedIn = {isClubLoggedIn}/>} />}
 
-          {!isAccountLoggedIn && <Route path="/user_login" element={<UserLogin onLogin={handleUserLogin} onUserRegistration={handleUserRegistration} />} />}
+          {!isAccountLoggedIn && <Route path="/user_login" element={<UserLogin onLogin={handleUserLogin} onUserRegistration={handleUserRegistration} isUserLoggedIn = {isUserLoggedIn}/>} />}
 
           {(!isUserLoggedIn && isClubLoggedIn) && <Route path="/club_management" element={<ClubManagement />} />}
           {(!isUserLoggedIn && isClubLoggedIn) && <Route path="/club_details" element={<ClubDetails />} />}
@@ -98,7 +116,7 @@ function App() {
 
           <Route path="/club_matching_survey" element={<Survey onSurveySubmit={handleSurveySubmit} />} />
           
-          {(isUserLoggedIn || isClubLoggedIn) && <Route path="/account_management" element={<Database userData={userData} />} />}
+          {(isUserLoggedIn || isClubLoggedIn) && <Route path="/database" element={<Database userDataArray={userDataArray} clubDataArray={clubDataArray}/>} />}
         </Routes>
       </div>
     </Router>
