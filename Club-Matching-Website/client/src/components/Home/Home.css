@@ -11,10 +11,22 @@
   }
 
 .home-title{
-  max-width: 450px; /* Adjust the maximum width of the home title container */
+  max-width: 650px; /* Adjust the maximum width of the home title container */
   margin: 0 auto; /* Center the survey container horizontally */
   color: black;
   border-radius: 15px;
   background: #E5A823;
   border: 2px solid black;
+  padding: 7px 10px 7px 10px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.home-container .home-title {
+  opacity: 0;
+  transition: 0.2s 180s;
+}
+
+.home-container:hover .home-title {
+  opacity: 1;
+  transition: 0.2s;
 }
