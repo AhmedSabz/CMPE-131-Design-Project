@@ -37,6 +37,33 @@ function App() {
 
 
   useEffect(() => {
+    // Retrieve state from local storage
+    const savedState = localStorage.getItem('state');
+    const initialState = savedState ? JSON.parse(savedState) : {};
+
+    // Update state based on local storage
+    if (initialState.isUserLoggedIn) setIsUserLoggedIn(initialState.isUserLoggedIn);
+    if (initialState.isClubLoggedIn) setIsClubLoggedIn(initialState.isClubLoggedIn);
+    if (initialState.isAccountLoggedIn) setIsAccountLoggedIn(initialState.isAccountLoggedIn);
+    if (initialState.isAdminLoggedIn) setIsAdminLoggedIn(initialState.isAdminLoggedIn);
+    if (initialState.currentUser) setCurrentUser(initialState.currentUser);
+    if (initialState.currentClub) setCurrentClub(initialState.currentClub);
+  }, []);
+
+  useEffect(() => {
+    // Save state to local storage whenever state changes
+    const stateToSave = {
+      isUserLoggedIn,
+      isClubLoggedIn,
+      isAccountLoggedIn,
+      isAdminLoggedIn,
+      currentUser,
+      currentClub
+    };
+    localStorage.setItem('state', JSON.stringify(stateToSave));
+  }, [isUserLoggedIn, isClubLoggedIn, isAccountLoggedIn, isAdminLoggedIn, currentUser, currentClub]);
+
+  useEffect(() => {
     axios
     .get('http://localhost:5555/Clubs')
     .then((response) => {
