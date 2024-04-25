@@ -1,0 +1,55 @@
+/* Navigation.css */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1C88F4 ;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+  
+  .navbar-title {
+    margin-right: auto;
+    /* color: white; */
+    /* font-weight: 500; */
+    /* text-decoration: none; */
+
+    background-image: url('../../../public/SJSU Primary mark_Reversed.png');
+    /* Adjust background image properties */
+    background-size: contain; /* Cover the entire container */
+    background-position: center; /* Center the background image */
+    /* Add other styles as needed */
+    background-repeat: no-repeat;
+    color: transparent;
+  }
+  
+
+
+  .navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navbar ul li {
+    display: inline;
+    margin-right: 10px;
+    border: none;
+  }
+  
+  .navbar button {
+    background-color: transparent;
+    border: transparent;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    outline: none; 
+  }
+  
+  .navbar button:hover {
+    text-decoration: underline;
+  }
+  
