@@ -23,10 +23,10 @@
 
 .home-container .home-title {
   opacity: 0;
-  transition: 0.2s 180s;
+  transition: 0.8s 180s;
 }
 
 .home-container:hover .home-title {
   opacity: 1;
-  transition: 0.2s;
+  transition: 0.8s;
 }
