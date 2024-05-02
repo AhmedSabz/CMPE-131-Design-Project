@@ -34,4 +34,32 @@
   .survey-submit-button:hover {
     background-color: #0056b3; /* Change background color of submit button on hover */
   }
-  
+
+  .form-contain {
+    padding-top: 25px;
+  }
+
+  .question-row {
+    margin-bottom: 55px;
+  }
+
+  .survey-answers {
+    margin-left: 10px;
+  }
+
+  .survey-answers2 {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .sport-dec {
+    margin-left: 15px;
+  }
+
+  .what-sport {
+    margin-left: 15px;
+  }
+
+  .submit-button {
+    cursor: pointer;
+  }
