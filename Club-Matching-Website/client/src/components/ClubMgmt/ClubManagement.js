@@ -1,12 +1,11 @@
 import React from 'react'
+import axios from 'axios'
 
-
-const ClubManagement = () => {
+const ClubManagement = ({currentClub}) => {
   return (
     <div>
-      <h2>
-      Club Management
-      </h2>
+     <h1>Club Management</h1>
+      <h2>{`Welcome to ${currentClub.clubName}`}</h2>
     </div>
   )
 }

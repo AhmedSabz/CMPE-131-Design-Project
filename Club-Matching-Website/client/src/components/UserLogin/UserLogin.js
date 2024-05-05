@@ -8,6 +8,8 @@ const UserLogin = ({ onLogin, setUserDataArray, isUserLoggedIn}) => {
   const [isNewUser, setIsNewUser] = useState(true);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [interests, setInterests] = useState([]);
+  const [joinedClubs, setJoinedClubs] = useState([]);
 
   const navigate = useNavigate();
 
@@ -33,7 +35,8 @@ const UserLogin = ({ onLogin, setUserDataArray, isUserLoggedIn}) => {
   };
 
   const handleUserRegistration = () => {
-    const newUserData = {username, password};
+    const newUserData = {username, password, interests, joinedClubs};
+    console.log(newUserData);
     axios
       .post('http://localhost:5555/Users', newUserData)
       .then(() => {
@@ -62,7 +65,7 @@ const UserLogin = ({ onLogin, setUserDataArray, isUserLoggedIn}) => {
   };
 
   const handleUserLogin = () => {
-    const newUserData = {username, password};
+    const newUserData = {username, password, interests, joinedClubs};
     onLogin(newUserData);
   };
 

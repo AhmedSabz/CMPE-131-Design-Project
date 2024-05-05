@@ -8,7 +8,9 @@ router.post('/', async (request, response) => {
     try {
         if (
             !request.body.username ||
-            !request.body.password
+            !request.body.password ||
+            !request.body.interests || 
+            !request.body.joinedClubs
         ) {
             return response.status(400).send({
                 message: 'Send all required fields: Username, Password',
@@ -17,6 +19,8 @@ router.post('/', async (request, response) => {
         const newUser = {
             username: request.body.username,
             password: request.body.password,
+            interests: request.body.interests, 
+            joinedClubs: request.body.joinedClubs
         };
 
     //   Check if User already exists
@@ -53,7 +57,6 @@ router.get('/', async (request, response) => {
 router.get('/:id', async (request, response) => {
     try {
       const {id} = request.params;
-
       const user = await UserModel.findById(id);
       return response.status(200).send(user);
     } catch (error) {
@@ -67,7 +70,9 @@ router.put('/:id', async (request, response) => {
     try {
         if (
             !request.body.username ||
-            !request.body.password
+            !request.body.password ||
+            !request.body.interests || 
+            !request.body.joinedClubs
         ) {
             return response.status(400).send({
                 message: 'Send all required fields: Username, Password',

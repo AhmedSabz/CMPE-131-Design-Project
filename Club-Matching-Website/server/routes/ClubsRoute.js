@@ -9,7 +9,9 @@ router.post('/', async (request, response) => {
         if (
             !request.body.clubName ||
             !request.body.password ||
-            !request.body.description
+            !request.body.description ||
+            !request.body.tags ||
+            !request.body.members
         ) {
             return response.status(400).send({
                 message: 'Send all required fields: ClubName, Password, Description',
@@ -19,6 +21,8 @@ router.post('/', async (request, response) => {
             clubName: request.body.clubName,
             password: request.body.password,
             description: request.body.description,
+            tags: request.body.tags,
+            members: request.body.members,
         };
 
     //   Check if Club already exists
@@ -70,7 +74,9 @@ router.put('/:id', async (request, response) => {
         if (
             !request.body.clubName ||
             !request.body.password ||
-            !request.body.description
+            !request.body.description ||
+            !request.body.tags ||
+            !request.body.members
         ) {
             return response.status(400).send({
                 message: 'Send all required fields: ClubName, Password, Description',

@@ -12,7 +12,9 @@ const ClubSchema = new mongoose.Schema({
     description: {
         type: String,
         required: true,
-    }
+    },
+    tags: [],
+    members: []
 });
 
 export const ClubModel = mongoose.model("Clubs", ClubSchema)

@@ -1,65 +1,56 @@
 // Survey.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import {useNavigate } from 'react-router-dom';
 import './Survey.css';
 
-/*
 
-const Survey = ({ onSurveySubmit }) => {
-  const [answers, setAnswers] = useState({
-    interest1: '',
-    interest2: '',
-    interest3: '',
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setAnswers(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Call the onSurveySubmit callback with the survey answers
-    onSurveySubmit(answers);
-  };
-
-  return (
-    <div>
-      <h2>Take the Survey</h2>
-      <form onSubmit={handleSubmit}>
-        <label className='survey-label'>
-          Interest 1:
-          <input className="survey-input" type="text" name="interest1" value={answers.interest1} onChange={handleChange} />
-        </label>
-        <label className='survey-label'>
-          Interest 2:
-          <input className="survey-input" type="text" name="interest2" value={answers.interest2} onChange={handleChange} />
-        </label>
-        <label className='survey-label'>
-          Interest 3:
-          <input className="survey-input" type="text" name="interest3" value={answers.interest3} onChange={handleChange} />
-        </label>
-        <button className="survey-submit-button" type="submit">Submit</button>
-      </form>
-    </div>
-  );
-};
-*/
-
-const QuestionForm = () => {
-  const [subjects, setSubjects] = useState(['', '', '']);
+const Survey = ({currentUser, setCurrentUser, currentUserId}) => {
+  const [userInterests, setUserInterests] = useState([]);
+  const [interests, setInterests] = useState(['', '', '']);
   const [hobbies, setHobbies] = useState(['', '', '']);
   const [playsSports, setPlaysSports] = useState('');
   const [sportPlayed, setSportPlayed] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubjectChange = (index, value) => {
-    setSubjects((prevSubjects) => {
-      const updatedSubjects = [...prevSubjects];
-      updatedSubjects[index] = value;
-      return updatedSubjects;
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    axios
+    .get(`http://localhost:5555/Users/${currentUser._id}`)
+    .then((response) => {
+      setUserInterests(response.data.interests);
+      setCurrentUser(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  },[currentUser._id, setCurrentUser, setUserInterests]);
+
+  useEffect(() => {
+    console.log(userInterests);
+  }, [userInterests]);
+
+
+  // useEffect(() => {
+  //   console.log(currentUser);
+
+  //   axios
+  //   .get(`http://localhost:5555/Users/${currentUserId}`)
+  //   .then((response) => {
+  //     setCurrentUser(response);
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //   })
+  // }, []);
+
+  const handleInterestChange = (index, value) => {
+    setInterests((prevInterests) => {
+      const updatedInterests = [...prevInterests];
+      updatedInterests[index] = value;
+      return updatedInterests;
     });
   };
 
@@ -78,11 +69,29 @@ const QuestionForm = () => {
     });
   };
 
+  const updateInterests = () => {
+    const updatedInterests = interests;
+    console.log(currentUser);
+    const updatedInterestUser = {...currentUser, interests: [...currentUser.interests, ...updatedInterests]};
+    console.log(updatedInterestUser);
+    setCurrentUser(updatedInterestUser);
+    axios
+    .put(`http://localhost:5555/Users/${currentUser._id}`, updatedInterestUser)
+    .then(() => {
+      alert("Changes have been saved")
+    })  
+    .catch((error) => {
+        alert('Something went wrong, changes could not be saved'); 
+    }) 
+    navigate('/account_dashboard');
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission (e.g., send data to a server)
-    console.log('Form submitted:', { subjects, hobbies, playsSports, sportPlayed });
-    setSubjects(['', '', '']);
+    console.log('Form submitted:', { interests, hobbies, playsSports, sportPlayed });
+    updateInterests();
+    setInterests(['', '', '']);
     setHobbies(['', '', '']);
     setPlaysSports('');
     setSportPlayed('');
@@ -95,30 +104,14 @@ const QuestionForm = () => {
   return (
     <form className='form-contain' onSubmit={handleSubmit}>
       <label className='question-row'>
-        What are your 3 favorite school subjects?
-        {subjects.map((subject, index) => (
-          <input
-            className='survey-answers'
-            key={index}
-            type="text"
-            value={subject}
-            onChange={(e) => handleSubjectChange(index, e.target.value)}
-          />
-        ))}
+        What are your 3 favorite school interests?
+        {interests.map((interest, index) => (<input className='survey-answers' key={index} type="text" value={interest} onChange={(e) => handleInterestChange(index, e.target.value)} required/> ))}
       </label>
       <br />
       <br />
       <label className='question-row'>
         What are 3 of your favorite hobbies?
-        {hobbies.map((hobby, index) => (
-          <input
-            className='survey-answers2'
-            key={index}
-            type="text"
-            value={hobby}
-            onChange={(e) => handleHobbyChange(index, e.target.value)}
-          />
-        ))}
+        {hobbies.map((hobby, index) => ( <input className='survey-answers2' key={index} type="text" value={hobby} onChange={(e) => handleHobbyChange(index, e.target.value)} required /> ))}
       </label>
       <br />
       <br />
@@ -135,12 +128,7 @@ const QuestionForm = () => {
       {playsSports === 'yes' && (
         <label className='question-row'>
           Which sport do you play?
-          <input
-            className='what-sport'
-            type="text"
-            value={sportPlayed}
-            onChange={(e) => setSportPlayed(e.target.value)}
-          />
+          <input className='what-sport' type="text" value={sportPlayed} onChange={(e) => setSportPlayed(e.target.value)}/>
         </label>
       )}
       <br />
@@ -152,4 +140,4 @@ const QuestionForm = () => {
 
 
 //export default Survey;
-export default QuestionForm;
+export default Survey;

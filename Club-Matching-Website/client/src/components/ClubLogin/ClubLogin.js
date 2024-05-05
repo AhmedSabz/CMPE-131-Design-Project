@@ -8,6 +8,8 @@ const ClubLogin = ({ onLogin, setClubDataArray, isClubLoggedIn }) => {
   const [clubName, setClubName] = useState('');
   const [password, setPassword] = useState('');
   const [description, setDescription] = useState('');
+  const [tags, setTags] = useState(['', '', '']);
+  const [members, setMembers] = useState([]);
 
   const navigate = useNavigate();
 
@@ -32,9 +34,16 @@ const ClubLogin = ({ onLogin, setClubDataArray, isClubLoggedIn }) => {
     setIsNewClub(true);
   };
 
+  const handleTagChange = (index, value) => {
+    setTags((prevTags) => {
+      const updatedSubjects = [...prevTags];
+      updatedSubjects[index] = value;
+      return updatedSubjects;
+    });
+  };
 
   const handleClubRegistration = () => {
-      const newClubData = {clubName, password, description};
+      const newClubData = {clubName, password, description, tags, members};
       axios
         .post('http://localhost:5555/Clubs', newClubData)
         .then(() => {
@@ -62,8 +71,10 @@ const ClubLogin = ({ onLogin, setClubDataArray, isClubLoggedIn }) => {
           })
   };
 
+
+
   const handleClubLogin = () => {
-    const newClubData = {clubName, password, description};
+    const newClubData = {clubName, password, description, tags, members};
     onLogin(newClubData);
   };
   
@@ -100,6 +111,11 @@ const ClubLogin = ({ onLogin, setClubDataArray, isClubLoggedIn }) => {
             <label className='form-container-label'>
               Description:
               <textarea className='form-container-textarea' value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Enter club description"></textarea>
+            </label>
+            <br />
+            <label className='question-row'>
+              Please Provide Topics Relating to the Club:
+              {tags.map((tag, index) => (<input className='form-container-input' key={index} type="text" value={tag} onChange={(e) => handleTagChange(index, e.target.value)}/>))}
             </label>
             <br />
             <button type="submit" className='form-container-button'>Create Club</button>

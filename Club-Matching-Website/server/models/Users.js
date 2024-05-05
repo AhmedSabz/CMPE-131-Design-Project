@@ -10,7 +10,9 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-    }
+    },
+    interests: [],
+    joinedClubs: []
 });
 
 export const UserModel = mongoose.model("Users", UserSchema);

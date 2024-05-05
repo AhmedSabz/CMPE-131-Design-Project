@@ -32,13 +32,14 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [currentClub, setCurrentClub] = useState({});
   const [showSurvey, setShowSurvey] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState("");
 
   const navigate = useNavigate();
 
 
   useEffect(() => {
     // Retrieve state from local storage
-    const savedState = localStorage.getItem('state');
+    const savedState = sessionStorage.getItem('state');
     const initialState = savedState ? JSON.parse(savedState) : {};
 
     // Update state based on local storage
@@ -48,7 +49,7 @@ function App() {
     if (initialState.isAdminLoggedIn) setIsAdminLoggedIn(initialState.isAdminLoggedIn);
     if (initialState.currentUser) setCurrentUser(initialState.currentUser);
     if (initialState.currentClub) setCurrentClub(initialState.currentClub);
-  }, []);
+  }, [setIsUserLoggedIn, setIsClubLoggedIn, setIsAccountLoggedIn, setIsAdminLoggedIn, setCurrentUser, setCurrentClub]);
 
   useEffect(() => {
     // Save state to local storage whenever state changes
@@ -60,7 +61,7 @@ function App() {
       currentUser,
       currentClub
     };
-    localStorage.setItem('state', JSON.stringify(stateToSave));
+    sessionStorage.setItem('state', JSON.stringify(stateToSave));
   }, [isUserLoggedIn, isClubLoggedIn, isAccountLoggedIn, isAdminLoggedIn, currentUser, currentClub]);
 
   useEffect(() => {
@@ -103,15 +104,21 @@ function App() {
     else {
       const searchedUserName = userDataArray.find(user => user.username === newUserData.username);
       const searchedUserPassword = userDataArray.find(user => user.password === newUserData.password);
-      if((searchedUserName && searchedUserPassword) && (searchedUserName === searchedUserPassword)){
+      if((searchedUserName && searchedUserPassword) && (searchedUserName === searchedUserPassword)){   
         setIsUserLoggedIn(true);
         setIsAccountLoggedIn(true);
-        setCurrentUser(newUserData);
+        setCurrentUser(searchedUserName);
+        console.log(currentUser)
         navigate("/account_dashboard");
       }
       else{
         alert("Incorrect Username or Password");
       }
+    }
+    console.log(currentUser);
+    if(currentUser === true){
+      setCurrentUserId(currentUser._id);
+      console.log(currentUserId);
     }
   };
 
@@ -127,12 +134,11 @@ function App() {
     })
     const searchedClubName = clubDataArray.find(club => club.clubName === newClubData.clubName);
     const searchedClubPassword = clubDataArray.find(club => club.password === newClubData.password);
-    console.log(newClubData);
-    console.log(searchedClubName);
+   
     if((searchedClubName && searchedClubPassword) && (searchedClubName === searchedClubPassword)){
       setIsClubLoggedIn(true);
       setIsAccountLoggedIn(true);
-      setCurrentClub(newClubData);
+      setCurrentClub(searchedClubName);
       navigate('/club_management');
     }
     else{
@@ -146,6 +152,7 @@ function App() {
     setIsUserLoggedIn(false);
     setIsClubLoggedIn(false);
     setIsAccountLoggedIn(false);
+    setIsAdminLoggedIn(false);
     setCurrentUser({});
     setCurrentClub({});
   };
@@ -171,19 +178,19 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           
-          {(isUserLoggedIn || isClubLoggedIn) && <Route path="/account_dashboard" element={<Dashboard currentUser={currentUser}/>} />}
+          {(isUserLoggedIn || isClubLoggedIn) && <Route path="/account_dashboard" element={<Dashboard currentUser={currentUser} setCurrentUser = {setCurrentUser} userDataArray={userDataArray} clubDataArray={clubDataArray} setClubDataArray={setClubDataArray}/>} />}
           
           {!isAccountLoggedIn && <Route path="/club_login" element={<ClubLogin onLogin={handleClubLogin} setClubDataArray={setClubDataArray} isClubLoggedIn={isClubLoggedIn}/>} />}
 
           {!isAccountLoggedIn && <Route path="/user_login" element={<UserLogin onLogin={handleUserLogin} setUserDataArray={setUserDataArray} isUserLoggedIn = {isUserLoggedIn}/>} />}
 
-          {(!isUserLoggedIn && isClubLoggedIn) && <Route path="/club_management" element={<ClubManagement />} />}
+          {(!isUserLoggedIn && isClubLoggedIn) && <Route path="/club_management" element={<ClubManagement  currentClub={currentClub}/>} />}
           {(!isUserLoggedIn && isClubLoggedIn) && <Route path="/club_details" element={<ClubDetails />} />}
           {(isUserLoggedIn && !isClubLoggedIn) && <Route path="/user_management" element={<UserManagement />} />}
 
-          <Route path="/club_matching_survey" element={<Survey onSurveySubmit={handleSurveySubmit} />} />
+          <Route path="/club_matching_survey" element={<Survey onSurveySubmit={handleSurveySubmit} currentUser={currentUser} setCurrentUser = {setCurrentUser} currentUserId={currentUserId}/>} />
           
-          { (isAdminLoggedIn) && <Route path="/database" element={<Database userDataArray={userDataArray} clubDataArray={clubDataArray}/>} />}
+          { (isAdminLoggedIn) && <Route path="/database" element={<Database/>} />}
           <Route path="/database/users/edit/:id" element={<EditUser/>} />
            <Route path="/database/users/delete/:id" element={<DeleteUser/>} />
           <Route path="/database/clubs/edit/:id" element={<EditClub/>} />
