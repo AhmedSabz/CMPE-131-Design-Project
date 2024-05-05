@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {AiOutlineEdit} from 'react-icons/ai';
-import {BsInfoCircle} from 'react-icons/bs';
-import {MdOutlineAddEdit, MdOutlineDelete} from 'react-icons/md';
 import './Database.css'
 
 import axios from 'axios';
@@ -42,7 +39,6 @@ const Database = () => {
             <th className='cell-labels'> # </th>
             <th className='cell-labels'> Username </th>
             <th className='cell-labels'> Password </th>
-            <th className='cell-labels'> Operations </th>
           </tr>
         </thead>
         <tbody>
@@ -57,16 +53,6 @@ const Database = () => {
               <td>
                 {user.password}
               </td>
-              <td>
-                <div>
-                  <Link to={`/database/users/edit/${user._id}`}>
-                      <AiOutlineEdit/>
-                  </Link>
-                  <Link to={`/database/users/delete/${user._id}`}>
-                      <MdOutlineDelete/>
-                  </Link>
-                </div>
-              </td>
             </tr>
           ))}
         </tbody>
@@ -79,7 +65,6 @@ const Database = () => {
           <th className='cell-labels'> # </th>
           <th className='cell-labels'> Club Name </th>
           <th className='cell-labels'> Password </th>
-          <th className='cell-labels'> Operations </th>
         </tr>
         </thead>
         <tbody>
@@ -93,16 +78,6 @@ const Database = () => {
               </td>
               <td>
                 {club.password}
-              </td>
-              <td>
-                <div>
-                  <Link to={`/database/clubs/edit/${club._id}`}>
-                      <AiOutlineEdit/>
-                  </Link>
-                  <Link to={`/database/clubs/delete/${club._id}`}>
-                      <MdOutlineDelete/>
-                  </Link>
-                </div>
               </td>
             </tr>
           ))}

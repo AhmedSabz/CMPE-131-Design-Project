@@ -83,7 +83,6 @@ const Survey = ({currentUser, setCurrentUser, currentUserId}) => {
     .catch((error) => {
         alert('Something went wrong, changes could not be saved'); 
     }) 
-    navigate('/account_dashboard');
   };
 
   const handleSubmit = (e) => {
@@ -102,6 +101,8 @@ const Survey = ({currentUser, setCurrentUser, currentUserId}) => {
   };
 
   return (
+    <div className='database-container'>
+    <h1>Club Matching Survey</h1>
     <form className='form-contain' onSubmit={handleSubmit}>
       <label className='question-row'>
         What are your 3 favorite school interests?
@@ -135,6 +136,7 @@ const Survey = ({currentUser, setCurrentUser, currentUserId}) => {
       <br />
       <button className='submit-button' type="submit">Submit</button>
     </form>
+    </div>
   );
 };
 

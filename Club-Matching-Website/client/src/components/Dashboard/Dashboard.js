@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect  } from 'react'
 import { Link } from 'react-router-dom';
 import {MdOutlineAdd, MdOutlineRemove} from 'react-icons/md';
+import  './Dashboard.css'
 import axios from 'axios'
 
 
@@ -84,7 +85,7 @@ const Dashboard = ({currentUser, setCurrentUser, clubDataArray, setClubDataArray
     const foundClub = clubsJoined.find((club) => 
         club._id === id
     );
-      const removedClub = currentUser.joinedClubs.filter((clubs) => clubs !== foundClub); 
+      const removedClub = currentUser.joinedClubs.filter((clubs) => clubs._id !== foundClub._id); 
       const removedJoinedClubsUser = {...currentUser, joinedClubs: removedClub};
       console.log(removedJoinedClubsUser);
       setCurrentUser(removedJoinedClubsUser);
@@ -118,8 +119,7 @@ const Dashboard = ({currentUser, setCurrentUser, clubDataArray, setClubDataArray
   return (
     <div className='database-container'>
       <div> 
-      <h1>Account Dashboard</h1>
-      <h2>{`Welcome ${currentUser.username}`}</h2>
+      <h1>{`Welcome ${currentUser.username}`}</h1>
       </div>
       <h2 className='club-list-title'>Clubs that Might Match Your Interests:</h2>
       <table className='list'>

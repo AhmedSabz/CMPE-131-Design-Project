@@ -76,9 +76,6 @@ const UserLogin = ({ onLogin, setUserDataArray, isUserLoggedIn}) => {
     } 
     else {
       handleUserLogin();
-      if(isUserLoggedIn === true){
-        navigate('/account_dashboard');
-      }
     }
     setUsername("");
     setPassword("");

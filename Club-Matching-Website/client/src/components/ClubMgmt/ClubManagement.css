@@ -1,0 +1,43 @@
+.database-container {
+    padding-top: 30px;
+   /* background-image: url('../../../public/SJSU_home_background.jpg'); */
+   /* height: 851px; */
+   height: 93.4vh;
+   width: 100%;
+  
+  }
+  
+  .database-title{
+  max-width: 450px; /* Adjust the maximum width of the home title container */
+  margin: 0 auto; /* Center the survey container horizontally */
+  color: black;
+  border-radius: 15px;
+  background: #E5A823;
+  border: 2px solid black;
+  }
+  
+  .user-list-title{
+  padding-top: 5px;
+  }
+  
+  .label{
+    font-weight: bold;
+  }
+  
+  .club-list-title{
+  padding-top: 20px;
+  }
+  
+  .list{
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: separate;
+  border-spacing: 50px 0;
+  }
+  
+  .cell-labels{
+  padding-left: 10px 0;
+  padding-right: 10px 0;
+  padding-top: 10px 0;
+  border-bottom: 1px solid #000;
+  }

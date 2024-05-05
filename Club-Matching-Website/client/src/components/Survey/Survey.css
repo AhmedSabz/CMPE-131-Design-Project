@@ -1,5 +1,15 @@
 /* Survey.css */
 
+.database-container {
+  padding-top: 30px;
+ /* background-image: url('../../../public/SJSU_home_background.jpg'); */
+ /* height: 851px; */
+ height: 93.4vh;
+ width: 100%;
+
+}
+
+
 .survey-container {
     max-width: 400px; /* Adjust the maximum width of the survey container */
     margin: 0 auto; /* Center the survey container horizontally */

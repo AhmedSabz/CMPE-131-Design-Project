@@ -109,7 +109,7 @@ function App() {
         setIsAccountLoggedIn(true);
         setCurrentUser(searchedUserName);
         console.log(currentUser)
-        navigate("/account_dashboard");
+        navigate("/");
       }
       else{
         alert("Incorrect Username or Password");
@@ -139,7 +139,7 @@ function App() {
       setIsClubLoggedIn(true);
       setIsAccountLoggedIn(true);
       setCurrentClub(searchedClubName);
-      navigate('/club_management');
+      navigate('/');
     }
     else{
       alert("Incorrect Username or Password");
@@ -184,9 +184,9 @@ function App() {
 
           {!isAccountLoggedIn && <Route path="/user_login" element={<UserLogin onLogin={handleUserLogin} setUserDataArray={setUserDataArray} isUserLoggedIn = {isUserLoggedIn}/>} />}
 
-          {(!isUserLoggedIn && isClubLoggedIn) && <Route path="/club_management" element={<ClubManagement  currentClub={currentClub}/>} />}
-          {(!isUserLoggedIn && isClubLoggedIn) && <Route path="/club_details" element={<ClubDetails />} />}
-          {(isUserLoggedIn && !isClubLoggedIn) && <Route path="/user_management" element={<UserManagement />} />}
+          {(!isUserLoggedIn && isClubLoggedIn) && <Route path="/club_management" element={<ClubManagement currentClub={currentClub} setCurrentClub = {setCurrentClub}/>} />}
+          {(!isUserLoggedIn && isClubLoggedIn) && <Route path="/club_details" element={<ClubDetails currentClub={currentClub} />} />}
+          {(isUserLoggedIn && !isClubLoggedIn) && <Route path="/user_management" element={<UserManagement currentUser={currentUser} setCurrentUser = {setCurrentUser} clubDataArray={clubDataArray}/>} />}
 
           <Route path="/club_matching_survey" element={<Survey onSurveySubmit={handleSurveySubmit} currentUser={currentUser} setCurrentUser = {setCurrentUser} currentUserId={currentUserId}/>} />
           
