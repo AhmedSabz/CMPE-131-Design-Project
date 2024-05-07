@@ -97,7 +97,7 @@ const Survey = ({currentUser, setCurrentUser, currentUserId}) => {
       <br />
       <br />
       <label className='question-row'>
-        What are 3 of your favorite hobbies?
+        What are 3 of your favorite hobbies to do outside of school?
         {hobbies.map((hobby, index) => ( <input className='survey-answers2' key={index} type="text" value={hobby} onChange={(e) => handleHobbyChange(index, e.target.value)} required /> ))}
       </label>
       <br />
