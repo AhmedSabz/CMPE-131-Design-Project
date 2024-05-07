@@ -9,8 +9,7 @@ const Survey = ({currentUser, setCurrentUser, currentUserId}) => {
   const [userInterests, setUserInterests] = useState([]);
   const [interests, setInterests] = useState(['', '', '']);
   const [hobbies, setHobbies] = useState(['', '', '']);
-  const [playsSports, setPlaysSports] = useState('');
-  const [sportPlayed, setSportPlayed] = useState('');
+  const [topics, setTopics] = useState(['', '', '']);
   const [submitted, setSubmitted] = useState(false);
 
   const navigate = useNavigate();
@@ -33,19 +32,6 @@ const Survey = ({currentUser, setCurrentUser, currentUserId}) => {
   }, [userInterests]);
 
 
-  // useEffect(() => {
-  //   console.log(currentUser);
-
-  //   axios
-  //   .get(`http://localhost:5555/Users/${currentUserId}`)
-  //   .then((response) => {
-  //     setCurrentUser(response);
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   })
-  // }, []);
-
   const handleInterestChange = (index, value) => {
     setInterests((prevInterests) => {
       const updatedInterests = [...prevInterests];
@@ -54,11 +40,12 @@ const Survey = ({currentUser, setCurrentUser, currentUserId}) => {
     });
   };
 
-  const handlePlaysSportsChange = (value) => {
-    setPlaysSports(value);
-    if (value === 'no') {
-      setSportPlayed('');
-    }
+  const handleTopicChange = (index, value) => {
+    setTopics((prevTopics) => {
+      const updatedTopics = [...prevTopics];
+      updatedTopics[index] = value;
+      return updatedTopics;
+    });
   };
 
   const handleHobbyChange = (index, value) => {
@@ -88,12 +75,11 @@ const Survey = ({currentUser, setCurrentUser, currentUserId}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission (e.g., send data to a server)
-    console.log('Form submitted:', { interests, hobbies, playsSports, sportPlayed });
+    console.log('Form submitted:', { interests, hobbies, topics,});
     updateInterests();
     setInterests(['', '', '']);
     setHobbies(['', '', '']);
-    setPlaysSports('');
-    setSportPlayed('');
+    setTopics(['', '', '']);
     setSubmitted(true);
     setTimeout(() => {
       setSubmitted(false);
@@ -105,7 +91,7 @@ const Survey = ({currentUser, setCurrentUser, currentUserId}) => {
     <h1>Club Matching Survey</h1>
     <form className='form-contain' onSubmit={handleSubmit}>
       <label className='question-row'>
-        What are your 3 favorite school interests?
+        What are your top 3 favorite topics or interests to study in school?
         {interests.map((interest, index) => (<input className='survey-answers' key={index} type="text" value={interest} onChange={(e) => handleInterestChange(index, e.target.value)} required/> ))}
       </label>
       <br />
@@ -117,21 +103,9 @@ const Survey = ({currentUser, setCurrentUser, currentUserId}) => {
       <br />
       <br />
       <label className='question-row'>
-        Do you play sports?
-        <select className='sport-dec' value={playsSports} onChange={(e) => handlePlaysSportsChange(e.target.value)}>
-          <option value="">Select</option>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
+       What are some topics or subjects that you want to learn more about?
+        {topics.map((topic, index) => ( <input className='survey-answers2' key={index} type="text" value={topic} onChange={(e) => handleTopicChange(index, e.target.value)} required /> ))}
       </label>
-      <br />
-      <br />
-      {playsSports === 'yes' && (
-        <label className='question-row'>
-          Which sport do you play?
-          <input className='what-sport' type="text" value={sportPlayed} onChange={(e) => setSportPlayed(e.target.value)}/>
-        </label>
-      )}
       <br />
       <br />
       <button className='submit-button' type="submit">Submit</button>
