@@ -59,7 +59,7 @@ const Survey = ({currentUser, setCurrentUser, currentUserId}) => {
   const updateInterests = () => {
     const updatedInterests = interests;
     console.log(currentUser);
-    const updatedInterestUser = {...currentUser, interests: [...currentUser.interests, ...updatedInterests]};
+    const updatedInterestUser = {...currentUser, interests: [...currentUser.interests, ...updatedInterests, ...hobbies, ...topics]};
     console.log(updatedInterestUser);
     setCurrentUser(updatedInterestUser);
     axios
